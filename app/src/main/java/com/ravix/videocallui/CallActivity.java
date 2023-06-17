@@ -2,6 +2,7 @@ package com.ravix.videocallui;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class CallActivity extends AppCompatActivity {
@@ -46,7 +48,11 @@ public class CallActivity extends AppCompatActivity {
 
     private List<String> randomStrings = Arrays.asList("Millie", "Emma", "Jaylene", "Sophia");
     private List<Integer> imageResources = Arrays.asList(R.drawable.user1, R.drawable.user4, R.drawable.user3, R.drawable.user4);
-
+    private Handler timerHandler;
+    private Runnable timerRunnable;
+    private TextView timerTextView;
+    private int startTime = 0;
+    private int timeInterval = 1000; // 1 second
     @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +68,6 @@ public class CallActivity extends AppCompatActivity {
         participantAdapter.notifyItemInserted(0);
 
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            calLText = findViewById(R.id.call_title);
-
-            String text = intent.getStringExtra("username");
-                 calLText.setText(text);
-        }
 
 
         bottomBar = findViewById(R.id.bottomBar);
@@ -78,12 +77,26 @@ public class CallActivity extends AppCompatActivity {
         addUser = findViewById(R.id.add_users_icon);
         camera = findViewById(R.id.camera_change_icon);
         callEnd  = findViewById(R.id.calLEnd);
+        timerTextView = findViewById(R.id.timer_text);
 
         recyclerView = findViewById(R.id.recyclerViewCall);
 
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         recyclerView.setAdapter(participantAdapter);
         participantAdapter.notifyDataSetChanged();
+
+        timerHandler = new Handler();
+        timerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                startTime++; // Increment the timer value
+                updateTimerText(startTime);
+                timerHandler.postDelayed(this, timeInterval); // Schedule the next update
+            }
+        };
+
+        startTimer();
+
 
 //        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.grid_spacing); // Adjust the dimension resource as needed
 //        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, spacingInPixels, true));
@@ -199,6 +212,17 @@ public class CallActivity extends AppCompatActivity {
 
     }
 
+    private void startTimer() {
+        timerHandler.postDelayed(timerRunnable, timeInterval);
+    }
+
+    private void updateTimerText(int timeInSeconds) {
+        int minutes = timeInSeconds / 60;
+        int seconds = timeInSeconds % 60;
+        String timerText = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        timerTextView.setText(timerText);
+    }
+
     private void openBottomSheet() {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(CallActivity.this);
         View bottomSheetView = LayoutInflater.from(CallActivity.this).inflate(R.layout.bottom_sheet_layout, null);
@@ -246,5 +270,12 @@ public class CallActivity extends AppCompatActivity {
 
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timerHandler.removeCallbacks(timerRunnable); // Stop the timer when the activity is destroyed
+
     }
 }

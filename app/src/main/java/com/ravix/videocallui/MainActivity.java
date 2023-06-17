@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity{
            @Override
            public void onClick(View v) {
                Intent intent = new Intent(MainActivity.this, CallActivity.class);
-                intent.putExtra("username", "Meeting id: 265-658");
                 startActivity(intent);
            }
        });
@@ -73,8 +72,6 @@ public class MainActivity extends AppCompatActivity{
            @Override
            public void onClick(View v) {
                Intent intent = new Intent(MainActivity.this, CallActivity.class);
-               intent.putExtra("username", "Meeting id: 265-658");
-
                startActivity(intent);
            }
        });

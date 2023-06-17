@@ -1,4 +1,5 @@
 package com.ravix.videocallui;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,20 +37,26 @@ public class CallActivity extends AppCompatActivity {
 
     boolean isBackCamera = false;
     private ParticipantAdapter participantAdapter;
-    private List<String> participantList;
+    private List<Item> participantList;
     private RecyclerView recyclerView;
     private ItemAdapter itemAdapter;
     private List<Item> itemList;
     private TextView calLText;
     private  Button callEnd;
+
+    private List<String> randomStrings = Arrays.asList("Millie", "Emma", "Jaylene", "Sophia");
+    private List<Integer> imageResources = Arrays.asList(R.drawable.user1, R.drawable.user4, R.drawable.user3, R.drawable.user4);
+
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
 
         participantList = new ArrayList<>();
+        Item item = new Item("You", R.drawable.you);
 
-        participantList.add("You");
+        participantList.add(item);
 
         participantAdapter = new ParticipantAdapter(participantList);
         participantAdapter.notifyItemInserted(0);
@@ -62,6 +69,8 @@ public class CallActivity extends AppCompatActivity {
             String text = intent.getStringExtra("username");
                  calLText.setText(text);
         }
+
+
         bottomBar = findViewById(R.id.bottomBar);
         mic = findViewById(R.id.mic_icon);
         video = findViewById(R.id.video_icon);
@@ -70,15 +79,16 @@ public class CallActivity extends AppCompatActivity {
         camera = findViewById(R.id.camera_change_icon);
         callEnd  = findViewById(R.id.calLEnd);
 
-        // Set click listeners for the icons in the bottom bar
         recyclerView = findViewById(R.id.recyclerViewCall);
 
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView.setAdapter(participantAdapter);
+        participantAdapter.notifyDataSetChanged();
+
 //        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.grid_spacing); // Adjust the dimension resource as needed
 //        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, spacingInPixels, true));
 
 
-        // Calculate itemHeight based on recyclerViewHeight and itemCount
         recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -90,7 +100,7 @@ public class CallActivity extends AppCompatActivity {
                 if (itemCount == 1) {
                     itemHeight = ViewGroup.LayoutParams.MATCH_PARENT;
                 } else {
-                    int numRows = (itemCount + 1) / 2; // Calculate the number of rows in the grid
+                    int numRows = (itemCount + 1) / 2;
                     itemHeight = recyclerViewHeight / numRows;
                 }
 
@@ -115,30 +125,6 @@ public class CallActivity extends AppCompatActivity {
         });
 
         participantAdapter.setItemHeight(itemHeight);
-        recyclerView.setAdapter(participantAdapter);
-
-
-
-
-
-
-
-
-
-
-
-
-//        // Update an existing item
-//        int updatedPosition = 0;
-//        Item updatedItem = itemList.get(updatedPosition);
-//        updatedItem.setText("Updated Item");
-//        itemAdapter.notifyItemChanged(updatedPosition);
-//
-//        // Remove an item
-//        int removedPosition = 2;
-//        itemList.remove(removedPosition);
-//        itemAdapter.notifyItemRemoved(removedPosition);
-
 
         addUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,13 +137,11 @@ public class CallActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isMicOff) {
-                    // If already clicked, change the icon back to the original
-                    mic.setImageResource(R.drawable.mic_on);
+                     mic.setImageResource(R.drawable.mic_on);
                     isMicOff = false;
                     Toast.makeText(CallActivity.this, "Mic turned on", Toast.LENGTH_SHORT).show();
                 } else {
-                    // If not clicked, change the icon to the new icon
-                    mic.setImageResource(R.drawable.mute);
+                     mic.setImageResource(R.drawable.mute);
                     isMicOff = true;
                     Toast.makeText(CallActivity.this, "Mic turned off", Toast.LENGTH_SHORT).show();
 
@@ -169,14 +153,16 @@ public class CallActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isSoundOff) {
-                    // If already clicked, change the icon back to the original
-                    video.setImageResource(R.drawable.video);
+                    int newImageResId = R.drawable.you;
+                    participantAdapter.updateFirstItem(newImageResId);
+                     video.setImageResource(R.drawable.video);
                     isSoundOff = false;
                     Toast.makeText(CallActivity.this, "Everyone can see you", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    // If not clicked, change the icon to the new icon
-                    video.setImageResource(R.drawable.video_off);
+                    int newImageResId = R.drawable.user;
+                    participantAdapter.updateFirstItem(newImageResId);
+                     video.setImageResource(R.drawable.video_off);
                     isSoundOff = true;
                     Toast.makeText(CallActivity.this, "Video disabled", Toast.LENGTH_SHORT).show();
 
@@ -187,8 +173,7 @@ public class CallActivity extends AppCompatActivity {
         callEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle icon3 click event
-                Toast.makeText(CallActivity.this, "Call Ended", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(CallActivity.this, "Call Ended", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(CallActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -201,12 +186,10 @@ public class CallActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isBackCamera) {
-                    // If already clicked, change the icon back to the original
-                     isBackCamera = false;
+                      isBackCamera = false;
                     Toast.makeText(CallActivity.this, "Using Front Camera", Toast.LENGTH_SHORT).show();
                 } else {
-                    // If not clicked, change the icon to the new icon
-                     isBackCamera = true;
+                      isBackCamera = true;
                     Toast.makeText(CallActivity.this, "Using Rear Camera", Toast.LENGTH_SHORT).show();
 
                 }
@@ -222,15 +205,13 @@ public class CallActivity extends AppCompatActivity {
 
 
 
-        // Set click listener for the expanded view in the bottom sheet
-        Button addButton = bottomSheetView.findViewById(R.id.add_user_btn);
+         Button addButton = bottomSheetView.findViewById(R.id.add_user_btn);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (participantList.size() != 10){
-                    // Add a new participant to the list
-                    participantList.add(getRandomName());
+                    participantList.add(getRandomParticipant());
                     participantAdapter.notifyItemInserted(participantList.size() - 1);
 
                     // Calculate the item height dynamically
@@ -248,25 +229,19 @@ public class CallActivity extends AppCompatActivity {
 
 
 
-                // Notify the adapter that the data set has changed
-             }
+              }
 
-            private String getRandomName() {
-                String[] names = {
-                        "John",
-                        "Emma",
-                        "Liam",
-                        "Olivia",
-                        "Noah",
-                        "Ava",
-                        // Add more names to the array as needed
-                };
-
+            private Item getRandomParticipant() {
                 Random random = new Random();
-                int randomIndex = random.nextInt(names.length);
+                int randomStringIndex = random.nextInt(randomStrings.size());
+                int randomImageIndex = random.nextInt(imageResources.size());
 
-                return names[randomIndex];
+                String randomString = randomStrings.get(randomStringIndex);
+                int randomImageRes = imageResources.get(randomImageIndex);
+
+                return new Item(randomString, randomImageRes);
             }
+
         });
 
         bottomSheetDialog.setContentView(bottomSheetView);

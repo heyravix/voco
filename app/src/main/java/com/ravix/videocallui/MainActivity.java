@@ -53,12 +53,13 @@ public class MainActivity extends AppCompatActivity{
 
 
          // Add your items to the itemList
-         for (int i = 0; i < 7; i++) {
-             Item item = new Item("User " + (i + 1), R.drawable.user4);
-             itemList.add(item);
-             itemAdapter.notifyItemInserted(itemList.size() - 1);
+             itemList.add(new Item("Emma", R.drawable.user1));
+             itemList.add(new Item("Jessica", R.drawable.user2));
+             itemList.add(new Item("Millie", R.drawable.user3));
 
-         }
+         itemAdapter.notifyItemInserted(itemList.size() - 1);
+
+
 
        startMeeting.setOnClickListener(new View.OnClickListener() {
            @Override

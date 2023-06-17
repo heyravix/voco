@@ -76,13 +76,7 @@
             android:text="End"
 
             android:background="@drawable/end_btn"/>
-        <ImageView
-            android:id="@+id/call_cut_icon"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/cut_call"
-            android:visibility="gone"
-            android:layout_weight="1"  />
+
         <ImageView
             android:id="@+id/add_users_icon"
             android:layout_width="30dp"

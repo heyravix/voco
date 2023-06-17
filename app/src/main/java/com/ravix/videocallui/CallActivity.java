@@ -46,15 +46,14 @@ public class CallActivity extends AppCompatActivity {
     private TextView calLText;
     private  Button callEnd;
 
-    private List<String> randomStrings = Arrays.asList("Millie", "Emma", "Jaylene", "Sophia");
-    private List<Integer> imageResources = Arrays.asList(R.drawable.user1, R.drawable.user4, R.drawable.user3, R.drawable.user4);
+    private List<String> randomStrings = Arrays.asList("Millie", "Emma", "Jaylene");
+    private List<Integer> imageResources = Arrays.asList(R.drawable.user1, R.drawable.user2, R.drawable.user3);
     private Handler timerHandler;
     private Runnable timerRunnable;
     private TextView timerTextView;
     private int startTime = 0;
     private int timeInterval = 1000; // 1 second
-    @SuppressLint("NotifyDataSetChanged")
-    @Override
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
@@ -73,7 +72,6 @@ public class CallActivity extends AppCompatActivity {
         bottomBar = findViewById(R.id.bottomBar);
         mic = findViewById(R.id.mic_icon);
         video = findViewById(R.id.video_icon);
-        callCut = findViewById(R.id.call_cut_icon);
         addUser = findViewById(R.id.add_users_icon);
         camera = findViewById(R.id.camera_change_icon);
         callEnd  = findViewById(R.id.calLEnd);
@@ -83,7 +81,6 @@ public class CallActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         recyclerView.setAdapter(participantAdapter);
-        participantAdapter.notifyDataSetChanged();
 
         timerHandler = new Handler();
         timerRunnable = new Runnable() {

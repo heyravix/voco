@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VideoCallUI</string>
+    <string name="app_name">Voco Meet</string>
     <string name="add_user">Add User</string>
     <string name="participants">Participants</string>
     <string name="team_meeting">Team Meeting</string>

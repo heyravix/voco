@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:scrollbars="none"
     android:background="#000"
-
     >
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:tools="http://schemas.android.com/tools"
@@ -32,6 +31,14 @@
             android:textColor="@color/white"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/you"/>
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search"
@@ -365,7 +372,9 @@
                         app:layout_constraintTop_toBottomOf="@id/recent_call_txt"
                         android:nestedScrollingEnabled="false"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="20dp"
+                         />
 
 <!--                    <androidx.cardview.widget.CardView-->
 <!--                        android:id="@+id/call_items"-->

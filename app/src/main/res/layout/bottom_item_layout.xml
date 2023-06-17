@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/call_items"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/recent_call_txt"
+    app:cardCornerRadius="10dp"  >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@drawable/gradient_user_cards"
+        >
+
+        <ImageView
+            android:id="@+id/user1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/user1"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mellisa"
+            android:textSize="20sp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toEndOf="@id/user1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        <ImageView
+            android:id="@+id/participant_mic_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/mic_on"
+            android:layout_marginEnd="20dp"
+             app:layout_constraintEnd_toStartOf="@id/participant_remove"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/participant_remove"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/remove"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tint="@color/white" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

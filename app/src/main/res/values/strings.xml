@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">VideoCallUI</string>
+    <string name="add_user">Add User</string>
+    <string name="participants">Participants</string>
+    <string name="team_meeting">Team Meeting</string>
+    <string name="_17_june_2023">17 June, 2023</string>
+    <string name="time">2:12 min left</string>
+    <string name="notification">Notification</string>
+    <string name="create_meeting">Create Meeting</string>
+    <string name="join_meeting">Join Meeting</string>
+    <string name="schedule_meet">Schedule Meet</string>
+    <string name="recent_calls">Recent Calls</string>
+    <string name="see_all">See all</string>
+    <string name="join">Join</string>
+    <string name="schedulemeeting">ScheduleMeeting</string>
+    <string name="joinmeetingicon">JoinMeetingIcon</string>
+    <string name="createmeetingicon">createMeetingIcon</string>
+    <string name="tagline">Call anytime, anywhere with VoCo</string>
+    <string name="enter_your_name">Enter your name</string>
+</resources>
